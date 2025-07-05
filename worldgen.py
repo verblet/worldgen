@@ -23,13 +23,15 @@ def world_gen (worldhex): #input hex number
 	stellar=" "
 	uwp_list=worldgenlib.uwp_gen() #generate UWP list
 	uwp_string=worldgenlib.uwp_hex(uwp_list) #convert UWP list to string
-	base=worldgenlib.base_gen(uwp_list[0]) #generate base code
+	#base=worldgenlib.base_gen(uwp_list['starport']) #generate base code
+	base=" "
 	trade_list=worldgenlib.trade_gen(uwp_list) #generate trade codes
 	trade_string=worldgenlib.trade_stringer(trade_list) #convert trade codes to string
-	pbg=worldgenlib.pbg_gen(uwp_list) #generate PBG code
-	zone=worldgenlib.zone_gen(uwp_list) #check for Amber Zone
-	stellar=worldgenlib.star_gen(uwp_list)
-	preliminary_world_string=worldname, str(worldhex), uwp_string, base, trade_string, zone, pbg, allegiance, stellar
+	#pbg=worldgenlib.pbg_gen(uwp_list) #generate PBG code
+	#zone=worldgenlib.zone_gen(uwp_list) #check for Amber Zone
+	#stellar=worldgenlib.star_gen(uwp_list)
+	#preliminary_world_string=worldname, str(worldhex), uwp_string, base, trade_string, zone, pbg, allegiance, stellar
+	preliminary_world_string=worldname, str(worldhex), uwp_string, base, trade_string
 	world_string=str.join(' ', preliminary_world_string)
 	return world_string #output world row string compatible with a SEC file	
 	

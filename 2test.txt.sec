@@ -1,0 +1,183 @@
+2test.txt
+
+The data in the sector text files is laid out in column format:
+
+ 1-14: Name
+15-18: HexNbr
+20-28: UWP
+   31: Bases
+33-47: Codes & Comments
+   49: Zone
+52-54: PBG
+56-57: Allegiance
+59-74: Stellar Data
+
+....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8
+
+Artemis       0105 D401331-7  S 9k LoPop Vaccsuit Dry   
+Yarikh        0106 A61745A-C    88k Vaccsuit         
+Triglav       0107 B664300-9  N 6k LoPop         
+Kasis         0108 D526585-5  S 120k Oxytank         
+Apollo        0109 X300000-7    1 LoPop Vaccsuit Rock   
+Triglav       0112 D837454-5    68k Oxytank         
+Koschei       0117 B799740-7  S 9mn Filter Islands Ag   
+Asherah       0120 A98B494-D    75k            
+Athena        0204 C515247-7    725 LoPop Vaccsuit      
+Pulodnitsa    0206 C200443-C    99k Vaccsuit Rock      
+Tschort       0209 B423312-9  S 1k LoPop Oxytank      
+Baal          0213 C503000-1    7 LoPop Vaccsuit      
+Athena        0214 C514445-5    41k Vaccsuit         
+Asherah       0219 C866747-3  S 4mn Ag         
+Baal          0220 D501220-7    582 LoPop Vaccsuit Dry   
+Apollo        0301 A564000-5    3 LoPop         
+Alkonost      0303 C5899BB-7  S 81mn HiPop Islands In   
+El-Elyon      0309 B738213-7    541 LoPop Oxytank      
+Domovoi       0311 AA38335-A    7k LoPop Large Oxytank   
+El-Elyon      0314 C344000-5    4 LoPop Filter      
+Rhea          0315 D75A556-8  S 930k Oceanic Ag      
+Zvuv          0318 BC9D9A6-D  N 81mn HiPop Large Filter In
+Chernobog     0320 D475400-9    47k Filter         
+Pulodnitsa    0401 C401115-7  S 68 LoPop Vaccsuit Dry   
+Yarikh        0403 D81449A-6    84k Vaccsuit         
+El-Elyon      0404 D354000-5    9 LoPop         
+Domovoi       0406 X753366-4    2k LoPop         
+Rhea          0408 B748320-6    6k LoPop Filter      
+Gaea          0411 B754243-8  N 928 LoPop         
+Shamash       0412 C87579A-6    7mn Filter Ag      
+Zeus          0413 D503231-4    584 LoPop Vaccsuit      
+Triglav       0414 C466643-6  P 7mn Ag         
+Pulodnitsa    0415 D444420-5    16k Filter         
+Artemis       0416 B774400-B  N 89k Filter         
+Athena        0417 A959474-D  N 47k Islands         
+Zvuv          0420 D400221-9    360 LoPop Vaccsuit Rock   
+Koschei       0502 C374100-6  S 48 LoPop Filter      
+Domovoi       0503 C302541-8    790k Vaccsuit         
+Triglav       0504 X100138-7    99 LoPop Small Vaccsuit Rock
+Belobog       0505 D757300-5  S 1k LoPop         
+Baal          0509 A798421-D    21k Filter         
+Athena        0510 C79B745-A  S 8mn Filter Ag      
+Alkonost      0511 BAAC9BC-B  S 59mn HiPop Large Oxytank Exotic In
+Shamash       0512 C7AB530-C    240k Oxytank Exotic      
+Shamash       0516 D735451-5  S 55k Oxytank         
+Athena        0518 B99B59B-8  N 220k Filter Ag      
+Koschei       0602 C634446-6    21k Oxytank         
+Pulodnitsa    0603 BB8B48A-A    17k Large         
+Pulodnitsa    0604 C79A440-B    34k Filter Oceanic      
+Apollo        0605 C786445-6  P 96k            
+Athena        0610 A677144-D    65 LoPop Filter      
+Artemis       0613 D100000-7  G 8 LoPop Small Vaccsuit Rock
+Gaea          0614 B7AB536-B  N 950k Oxytank Exotic      
+Rhea          0615 X964000-5    3 LoPop         
+Tschort       0616 A87A6AC-9  N 5mn Filter Oceanic Ag   
+Koschei       0617 A635522-9    280k Oxytank         
+Baal          0620 CBA8650-9    3mn Large Oxytank Exotic   
+Pulodnitsa    0701 X200322-7    7k LoPop Vaccsuit Rock   
+Apollo        0704 X100100-8    89 LoPop Small Vaccsuit Rock
+Zeus          0705 C6059B7-7    47mn HiPop Vaccsuit In   
+Yarikh        0706 X52687A-1    11mn HiPop Oxytank In   
+Zvuv          0707 X200575-7    420k Vaccsuit Rock      
+Kasis         0710 C936127-6    26 LoPop Oxytank      
+Artemis       0711 D86D877-4  S 54mn HiPop In      
+Pulodnitsa    0712 D463362-8  S 8k LoPop         
+Alkonost      0713 C306310-A  S 2k LoPop Vaccsuit      
+Belobog       0714 C828100-7  S 45 LoPop Oxytank      
+Rhea          0716 D565426-4    11k            
+Gaea          0718 X6AA100-7    90 LoPop Oxytank Exotic   
+Belobog       0801 A775357-E  N 2k LoPop Filter      
+Asherah       0802 D589100-5  S 47 LoPop Islands      
+Baal          0803 X835447-0    12k Oxytank         
+Athena        0804 D200255-8  S 247 LoPop Vaccsuit Rock   
+Athena        0807 X547720-5    5mn Filter Ag      
+Gaea          0809 D543354-4  S 2k LoPop Filter      
+Apollo        0810 X200000-7    3 LoPop Vaccsuit Rock   
+Zvuv          0812 D7A8886-8  S 83mn HiPop Oxytank Exotic In
+Apollo        0813 D6567BD-5    5mn Ag         
+Kasis         0814 B575225-8  S 506 LoPop Filter      
+Triglav       0816 C989410-5    72k Islands         
+Domovoi       0817 D444400-6    61k Filter         
+Kasis         0820 D7A7466-6    38k Oxytank Exotic      
+Apollo        0901 BA5B8BB-A    39mn HiPop Large In   
+Belobog       0902 B7A95A8-B    120k Oxytank Exotic      
+Alkonost      0903 C937563-9  S 370k Oxytank         
+Kasis         0904 D598000-1    2 LoPop Filter      
+Zvuv          0906 C200146-B  S 97 LoPop Vaccsuit Rock   
+Athena        0911 X365542-1    650k Ag         
+Zvuv          0915 C702000-7    7 LoPop Vaccsuit      
+Shamash       0916 B86C76A-A  S 8mn Ag         
+Apollo        0919 C10036B-8  S 5k LoPop Small Vaccsuit Rock
+Domovoi       1004 C343234-B    678 LoPop Filter      
+Belobog       1007 C527400-7    36k Oxytank         
+Asherah       1008 D526995-6  S 79mn HiPop Oxytank In   
+Gaea          1010 AA7C336-A  N 6k LoPop Large Filter   
+Zvuv          1011 C559100-5  S 80 LoPop Islands      
+Kasis         1013 A655759-B  N 8mn Ag         
+Asherah       1015 X414147-5    12 LoPop Vaccsuit      
+Shamash       1019 B40459B-B    170k Vaccsuit         
+Athena        1020 CA6B523-7    240k Large Ag      
+Rhea          1101 C769510-6  S 170k Islands Ag      
+Alkonost      1102 B797532-A  N 860k Filter Ag      
+Koschei       1103 BBAAA98-E  S 110mn HiPop Large Oxytank Exotic In
+Shamash       1104 BB4A676-A  N 3mn Large Filter Oceanic Ag
+Chernobog     1105 D86A213-7    765 LoPop Oceanic      
+Kasis         1107 D601597-7  S 350k Vaccsuit Dry      
+Gaea          1108 C100000-7    1 LoPop Small Vaccsuit Rock
+Yarikh        1109 D606100-8    60 LoPop Vaccsuit      
+Chernobog     1112 CB2A545-7  S 670k Large Oxytank Oceanic   
+Koschei       1118 BC7B758-8    2mn Large Filter Ag   
+Shamash       1119 A7AA440-C    92k Oxytank Exotic      
+Athena        1206 C756840-5    62mn HiPop In      
+Chernobog     1210 X426678-2    2mn Oxytank         
+Tschort       1211 B535232-7  A 138 LoPop Oxytank      
+Zeus          1212 B826521-8    510k Oxytank         
+Asherah       1213 D557386-5  S 1k LoPop         
+Asherah       1215 B200400-F  N 17k Vaccsuit Rock      
+Shamash       1218 D65647B-7  S 11k            
+Kasis         1220 X828522-3    660k Oxytank         
+Triglav       1301 C797722-9  S 7mn Filter Ag      
+Yarikh        1303 D869555-8    120k Islands Ag      
+Koschei       1304 CA7D686-7  S 1mn Large Filter Ag   
+Tschort       1305 C9A9434-9    53k Oxytank Exotic      
+Zeus          1306 D000000-7    3 LoPop Small Vaccsuit Rock
+El-Elyon      1307 C473535-B    180k Filter Ag      
+Alkonost      1308 X898678-3    9mn Filter Ag      
+Kasis         1312 C723400-9  S 24k Oxytank         
+Asherah       1313 C77B430-7    13k Filter         
+Artemis       1315 D6778B7-5  S 23mn HiPop Filter In   
+Shamash       1317 D200400-7    13k Vaccsuit Rock      
+Tschort       1401 A8A6656-B  N 5mn Oxytank Exotic      
+El-Elyon      1402 A757445-D    91k            
+Rhea          1403 D378000-1    4 LoPop Filter      
+Kasis         1404 B414230-7  N 660 LoPop Vaccsuit      
+Zeus          1405 D614314-6    5k LoPop Vaccsuit      
+Shamash       1406 C302477-9  S 77k Vaccsuit         
+Rhea          1408 D759411-6  S 39k Islands         
+Kasis         1409 D748300-4  S 6k LoPop Filter      
+Artemis       1412 D67A568-7  S 770k Filter Oceanic Ag   
+Rhea          1415 X200000-7    6 LoPop Vaccsuit Rock   
+Kasis         1417 AA9DABC-B  N 920mn HiPop Large Filter In
+Domovoi       1418 D434459-9  S 65k Oxytank         
+Chernobog     1419 B644100-7  N 62 LoPop Filter      
+Alkonost      1420 X200130-7    30 LoPop Vaccsuit Rock   
+Baal          1501 X5A7673-5    1mn Oxytank Exotic      
+El-Elyon      1502 D6668BE-2    62mn HiPop In      
+Gaea          1503 A888768-B  N 9mn Ag         
+Shamash       1504 A655412-8  S 11k            
+Apollo        1505 BA47557-7  N 650k Large Filter Ag   
+Kasis         1506 A300210-D  N 813 LoPop Vaccsuit Rock   
+Artemis       1507 D200234-7  S 924 LoPop Vaccsuit Rock   
+Zeus          1512 X63777C-5    1mn Oxytank         
+Rhea          1514 A526756-D  N 7mn Oxytank         
+El-Elyon      1516 B847266-A    649 LoPop Filter      
+Pulodnitsa    1517 C100566-8    910k Small Vaccsuit Rock   
+Gaea          1601 D929667-5    6mn Oxytank Islands      
+Asherah       1602 BAAB359-B  S 1k LoPop Large Oxytank Exotic
+Yarikh        1603 D85A537-7    910k Oceanic Ag      
+Belobog       1604 C200422-8  S 81k Vaccsuit Rock      
+Athena        1606 C6A9300-A    6k LoPop Oxytank Exotic   
+Zeus          1607 B887736-7    8mn Ag         
+Artemis       1611 X400000-7    2 LoPop Vaccsuit Rock   
+Alkonost      1612 C95D520-8  S 760k Ag         
+Triglav       1614 D67B523-7  S 660k Filter Ag      
+Kasis         1616 B788574-A  N 240k Ag         
+Artemis       1617 C8A989B-9    94mn HiPop Oxytank Exotic In
+Alkonost      1618 B778410-B    76k Filter         

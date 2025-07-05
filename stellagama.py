@@ -51,7 +51,7 @@ def pseudo_hex(num): #inputs number
 	now converted to a list.
 	"""
 	num=int(num)
-	code=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", 		"M", "N", "P", "Q", "E", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+	code=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 	num=code[num]
 	return num #outputs "pseudo-hex" number
 
