@@ -67,7 +67,7 @@ def tmpt_gen(worldatmo): #inputs atmos number
 
 	worldtemp=0
 	worldtemp=stellagama.dice(2,6) - 2
-	if worldatmo > 9:
+	if worldatmo >= 10:
 		worldtemp += 3
 	if worldtemp < 0:
 		worldtemp = 0
@@ -81,9 +81,9 @@ def hyd_gen(worldatmo,worldtemp): #inputs world size number
 	"""
 	worldhyd=0
 	worldhyd=stellagama.dice(2,6) - 7 + worldatmo
-	if worldatmo >= 10: # Hot and weird worlds have less water
+	if worldatmo >= 10 or  worldtemp >= 9: # Hot and weird worlds have less water
 		worldhyd -= 4
-	if worldatmo in [1,2]: # Atmosphereless worlds have no water
+	if worldatmo in [0,1]: # Atmosphereless worlds have no water
 		worldhyd = 0
 	if worldhyd < 0:
 		worldhyd = 0
@@ -114,7 +114,7 @@ def pop_gen (starport,worldhab): #inputs world size, atmospehere, and hydrograph
 	if worldhab == "NoHab":
 		worldpop -= 2
 	if starport == 'X':
-		worldpop -= 2
+		worldpop -= 1
 	if worldpop < 0:
 		worldpop = 0
 	if worldpop > 12:
@@ -134,17 +134,39 @@ def pop_gen (starport,worldhab): #inputs world size, atmospehere, and hydrograph
 	"""
 	return worldpop #outputs population number
 	
+'
+def eco_gen (worldpop,starbase): #inputs the world population number
+	"""
+	generate economy number
+	"""
+	worldeco=0
+	worldeco=stellagama.dice(2,6)-2
+	if worldpop==0:
+		worldeco=0
+	if worldpop >= 7:
+		worldeco+=1
+	if starbase in ['A','B']:
+		worldeco+=1
+	if starbase in ['D','X']:
+		worldeco+=1
+	if worldeco < 0:
+		worldeco=0
+	if worldeco>12:
+		worldeco=12
+	return worldeco #outputs the world economy number
 
-def gov_gen (worldpop): #inputs the world population number
+def gov_gen (worldeco): #inputs the world economy number
 	"""
 	generate government number
 	"""
 	worldgov=0
-	worldgov=stellagama.dice(2,6) - 7 + worldpop
+	worldgov=stellagama.dice(2,6) - 7 + worldeco
+	if worldeco == 0:
+		worldgov=0
 	if worldgov < 0:
 		worldgov=0
-	if worldgov>15:
-		worldgov=15
+	if worldgov>12:
+		worldgov=12
 	if worldpop==0:
 		worldgov=0
 	return worldgov #outputs the world government number
@@ -289,8 +311,10 @@ def trade_gen (uwp_list): #input UWP list
 	hab = hab_gen(uwp_list['worldatmo'], uwp_list['worldtemp'], uwp_list['worldhyd'])
 	trade_list.append(hab)
 
-	if uwp_list['worldatmo'] in [0,1]:
+	if uwp_list['worldatmo'] in [0]:
 		trade_list.append("Vaccuum")
+	if uwp_list['worldatmo'] in [1]:
+		trade_list.append("Trace")
 	if uwp_list['worldatmo'] in [2,3]:
 		trade_list.append("VeryThin")
 	if uwp_list['worldatmo'] in [4,5]:
@@ -308,14 +332,12 @@ def trade_gen (uwp_list): #input UWP list
 	if uwp_list['worldatmo'] == 13:
 		trade_list.append("Radioactive")
 
-	if uwp_list['worldatmo'] in [4,9]:
+	if uwp_list['worldatmo'] in [2,4,7,9]:
 		trade_list.append("Tainted")
 	else:
 		trade_list.append("Untainted")
 
-	if uwp_list['worldtemp'] in [0]:
-		trade_list.append("Cold")
-	if uwp_list['worldtemp'] in [1]:
+	if uwp_list['worldtemp'] in [0,1]:
 		trade_list.append("Cold")
 	if uwp_list['worldtemp'] in [2,3]:
 		trade_list.append("Cool")
@@ -323,9 +345,7 @@ def trade_gen (uwp_list): #input UWP list
 		trade_list.append("Temperate")
 	if uwp_list['worldtemp'] in [7,8]:
 		trade_list.append("Warm")
-	if uwp_list['worldtemp'] in [9]:
-		trade_list.append("Hot")
-	if uwp_list['worldtemp'] in [10]:
+	if uwp_list['worldtemp'] in [9,10]:
 		trade_list.append("Hot")
 
 	if uwp_list['worldhyd'] == 0:
@@ -341,9 +361,47 @@ def trade_gen (uwp_list): #input UWP list
 	if uwp_list['worldhyd'] in [10]:
 		trade_list.append("Pelagic")
 
+	if uwp_list['worldeco'] == "X":
+		trade_list.append("NoEcon")
+	if uwp_list['worldeco'] in [0,1,2,3,4]:
+		trade_list.append("Poor")
+	if uwp_list['worldeco'] in [5,6]:
+		trade_list.append("LowMiddle")
+	if uwp_list['worldeco'] in [7,8,]:
+		trade_list.append("UpMiddle")
+	if uwp_list['worldeco'] in [9,10]:
+		trade_list.append("Rich")
+
+	if uwp_list['worldgov'] == 0:
+		trade_list.append("No gov")
+	if uwp_list['worldgov'] == 1:
+		trade_list.append("Communal govt")
+	if uwp_list['worldgov'] == 2:
+		trade_list.append("Feudal govt")
+	if uwp_list['worldgov'] == 3:
+		trade_list.append("Monarchic govt")
+	if uwp_list['worldgov'] == 4:
+		trade_list.append("Theocratic govt")
+	if uwp_list['worldgov'] == 5:
+		trade_list.append("Colonial govt")
+	if uwp_list['worldgov'] == 6:
+		trade_list.append("Participative govt")
+	if uwp_list['worldgov'] == 7:
+		trade_list.append("Oligarchic")
+	if uwp_list['worldgov'] == 8:
+		trade_list.append("Charismatic govt")
+	if uwp_list['worldgov'] == 9:
+		trade_list.append("Representative govt")
+	if uwp_list['worldgov'] == 10:
+		trade_list.append("Technocratic govt")
+	if uwp_list['worldgov'] == 11:
+		trade_list.append("Corporate govt")
+	if uwp_list['worldgov'] == 12:
+		trade_list.append("Bureaucratic govt")
+
 	if hab in ["HiHab"] and uwp_list['worldpop'] in [5,6,7,8,9,10]:
 		trade_list.append("Agricultural")
-	elif hab in ["NoHab","LoHab"]:
+	elif hab in ["NoHab"]:
 		trade_list.append("Non-Agricultural")
 	else:
 		trade_list.append("Other")
@@ -357,7 +415,7 @@ def trade_gen (uwp_list): #input UWP list
 
 	if hab == "NoHab" and uwp_list['worldpop'] in [0,1,2,3]:
 		trade_list.append("Outpost")
-	elif hab == "HiHab" and pop in [0,1,2,3,4,5,6]:
+	elif hab == "HiHab" and pop in [0,1,2,3,4,5]:
 		trade_list.append("Reserve")
 	else:
 		trade_list.append("Other")
@@ -509,9 +567,9 @@ def uwp_gen():
 		worldhyd=hyd_gen(worldatmo, worldtemp) #generate world hydrographics
 		worldhab=hab_gen(worldatmo, worldtemp, worldhyd) #generate world habilitability rating
 		worldpop=pop_gen(starport,worldhab) #generate world population
-		worldgov=gov_gen(worldpop) #generate world government
-		worldlaw=law_gen(worldgov) #generate world law level
-		worldtech=tech_gen(starport, worldsize, worldatmo, worldtemp, worldhyd, worldpop, worldgov) #generate world tech-level
+		worldeco=eco_gen(worldgov) #generate world economy
+		worldgov=gov_gen(worldeco) #generate world government
+		worldtech=tech_gen(starport, worldsize, worldatmo, worldtemp, worldhyd, worldpop, worldeco, worldgov) #generate world tech-level
 		#uwp_list=uwp_list_gen(starport, worldsize, worldatmo, worldhyd, worldpop) #convert everything to a list
 		uwp_list=uwp_list_gen(starport, worldsize, worldatmo, worldtemp, worldhyd, worldpop, worldgov, worldlaw, worldtech) #convert everything to a list
 		return uwp_list #output UWP list
