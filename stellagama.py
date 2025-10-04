@@ -34,6 +34,41 @@ def random_choice(list): #input list
 	element=list[random.randint(0,len(list)-1)]
 	return element #output randomly-selected element
 
+def hidice(x,n,sides):
+	"""
+	dice-roller
+	"""
+	die=0
+	i=0
+	val=0
+	results=[]
+	while die<n:
+		results.append(random.randint(1,sides))
+		die+=1
+	results.sort()
+	results.reverse()
+	while i<x:
+		val = val + results[i]
+		i+=1
+	return val
+
+def lodice(x,n,sides):
+	"""
+	dice-roller
+	"""
+	die=0
+	i=0
+	val=0
+	results= []
+	while die<n:
+		results.append(random.randint(1,sides))
+		die+=1
+	results.sort()
+	while i<x:
+		val = val + results[i]
+		i+=1
+	return val
+
 def dice(n,sides):
 	"""
 	dice-roller

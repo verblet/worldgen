@@ -23,15 +23,14 @@ def world_gen (worldhex): #input hex number
 	stellar=" "
 	uwp_list=worldgenlib.uwp_gen() #generate UWP list
 	uwp_string=worldgenlib.uwp_hex(uwp_list) #convert UWP list to string
-	#base=worldgenlib.base_gen(uwp_list['starport']) #generate base code
-	base=" "
+	base=worldgenlib.base_gen(uwp_list['starport']) #generate base code
+	pbg=worldgenlib.pbg_gen(uwp_list) #generate PBG code
 	trade_list=worldgenlib.trade_gen(uwp_list) #generate trade codes
 	trade_string=worldgenlib.trade_stringer(trade_list) #convert trade codes to string
-	#pbg=worldgenlib.pbg_gen(uwp_list) #generate PBG code
 	#zone=worldgenlib.zone_gen(uwp_list) #check for Amber Zone
 	#stellar=worldgenlib.star_gen(uwp_list)
 	#preliminary_world_string=worldname, str(worldhex), uwp_string, base, trade_string, zone, pbg, allegiance, stellar
-	preliminary_world_string=worldname, str(worldhex), uwp_string, base, trade_string
+	preliminary_world_string=worldname, str(worldhex), uwp_string, base, pbg, trade_string
 	world_string=str.join(' ', preliminary_world_string)
 	return world_string #output world row string compatible with a SEC file	
 	
@@ -42,6 +41,7 @@ def sec_gen (maxcolumn, maxrow): #input maximum generated space row and column. 
 	sector_name=stellagama.savefile("txt")
 	file_name=sector_name+".sec"
 	with open(file_name,"w") as outp:
+		"""
 		outp.write(sector_name+'\r\n') #start of SEC file header output
 		outp.write(""+'\r\n')
 		outp.write("The data in the sector text files is laid out in column format:"+'\r\n')
@@ -58,10 +58,13 @@ def sec_gen (maxcolumn, maxrow): #input maximum generated space row and column. 
 		outp.write(""+'\r\n')
 		outp.write("....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8"+'\r\n')
 		outp.write(""+'\r\n') #end of SEC file header output
+		"""
+		outp.write("NAME HEX CODE BASES POPMOD AST GAS POP GRAV ATMO TAINT HAB POPGROUP GOV TRADE TRADE2 TECH WEALTH"+'\r\n')
+
 		for column in range (1, maxcolumn+1): #generate subsector, quadrant, or sector
 			for row in range (1, maxrow+1):
 				throw=stellagama.dice(1,6)
-				if throw>=4:
+				if throw>=3:
 					if row<=9:
 						row_loc="0%i" % (row)
 					if row>=10:
