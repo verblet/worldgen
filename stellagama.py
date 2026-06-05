@@ -34,6 +34,17 @@ def random_choice(list): #input list
 	element=list[random.randint(0,len(list)-1)]
 	return element #output randomly-selected element
 
+def dice(n,sides):
+	"""
+	dice-roller
+	"""
+	die=0
+	roll=0
+	while die<n:
+		roll=roll+random.randint(1,sides)
+		die+=1
+	return roll
+
 def hidice(x,n,sides):
 	"""
 	dice-roller
@@ -69,24 +80,13 @@ def lodice(x,n,sides):
 		i+=1
 	return val
 
-def dice(n,sides):
-	"""
-	dice-roller
-	"""
-	die=0
-	roll=0
-	while die<n:
-		roll=roll+random.randint(1,sides)
-		die+=1
-	return roll
-
 def pseudo_hex(num): #inputs number
 	"""
 	converts numbers to Cepheus Engine "Pseudo-Hex"
 	now converted to a list.
 	"""
 	num=int(num)
-	code=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+	code=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", 		"M", "N", "P", "Q", "E", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 	num=code[num]
 	return num #outputs "pseudo-hex" number
 

@@ -23,15 +23,16 @@ def world_gen (worldhex): #input hex number
 	stellar=" "
 	uwp_list=worldgenlib.uwp_gen() #generate UWP list
 	uwp_string=worldgenlib.uwp_hex(uwp_list) #convert UWP list to string
-	base=worldgenlib.base_gen(uwp_list['starport']) #generate base code
-	pbg=worldgenlib.pbg_gen(uwp_list) #generate PBG code
+	base=worldgenlib.base_gen(uwp_list) #generate base code
 	trade_list=worldgenlib.trade_gen(uwp_list) #generate trade codes
 	trade_string=worldgenlib.trade_stringer(trade_list) #convert trade codes to string
-	#zone=worldgenlib.zone_gen(uwp_list) #check for Amber Zone
-	#stellar=worldgenlib.star_gen(uwp_list)
-	#preliminary_world_string=worldname, str(worldhex), uwp_string, base, trade_string, zone, pbg, allegiance, stellar
-	preliminary_world_string=worldname, str(worldhex), uwp_string, base, pbg, trade_string
-	world_string=str.join(' ', preliminary_world_string)
+	hab=worldgenlib.hab_gen(uwp_list) 
+	gcode=worldgenlib.gcode_gen(uwp_list) #generate PBG code
+	pbg=worldgenlib.pbg_gen(uwp_list) #generate PBG code
+	zone=worldgenlib.zone_gen(uwp_list) #check for Amber Zone
+	stellar=worldgenlib.star_gen(uwp_list)
+	preliminary_world_string=worldname, str(worldhex), uwp_string, base, hab, trade_string, str(gcode), pbg, stellar
+	world_string=str.join(';', preliminary_world_string)
 	return world_string #output world row string compatible with a SEC file	
 	
 def sec_gen (maxcolumn, maxrow): #input maximum generated space row and column. as well as the file name for generation
@@ -59,12 +60,12 @@ def sec_gen (maxcolumn, maxrow): #input maximum generated space row and column. 
 		outp.write("....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8"+'\r\n')
 		outp.write(""+'\r\n') #end of SEC file header output
 		"""
-		outp.write("NAME HEX CODE BASES POPMOD AST GAS POP GRAV ATMO TAINT BREATHE TEMP POPGROUP GOV TECH TRADE1 TRADE2 TRADE3 TRADE4"+'\r\n')
-
+		outp.write("NAME;HEX;UWP;BASES;HAB;TRADE;GRAV;POP;GAS;AST;STELLAR") #end of SEC file header output
+		outp.write(""+'\r\n') #end of SEC file header output
 		for column in range (1, maxcolumn+1): #generate subsector, quadrant, or sector
 			for row in range (1, maxrow+1):
 				throw=stellagama.dice(1,6)
-				if throw>=3:
+				if throw>=4:
 					if row<=9:
 						row_loc="0%i" % (row)
 					if row>=10:
@@ -132,8 +133,8 @@ def	main():
 			stellagama.clear_screen()
 			print_menu()			
 			print ("")
-			print("World generation for the Cepheus Engine and similar OGL 2d6 Sci-Fi games")
-			print("v1.9, March 31st, 2018")
+			print("World generation for the Cepheus Engine (modified) and similar OGL 2d6 Sci-Fi games")
+			print("June 2026")
 			print("This is open source code, feel free to use it for any purpose")
 			print("contact the author at golan2072@gmail.com")
 		elif choice in [6, "6"]:
