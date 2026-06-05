@@ -15,17 +15,15 @@ def starport_gen():
 	"""
 	starport="X"
 	starport_roll=stellagama.dice(2,6)
-	if starport_roll in [12]:
+	if starport_roll in [2,3,4]:
 		starport="X"
-	if starport_roll in [10,11]:
-		starport="X"
-	if starport_roll in [9]:
+	if starport_roll in [5,6]:
 		starport="D"
 	if starport_roll in [7,8]:
 		starport="C"
-	if starport_roll in [5,6]:
+	if starport_roll in [9,10]:
 		starport="B"
-	if starport_roll in [2,3,4]:
+	if starport_roll in [11,12]:
 		starport="A"
 
 	return starport #outputs the starport letter
@@ -38,11 +36,11 @@ def size_gen(starport):
 	worldsize=stellagama.dice(2,6)-2
 
 	if starport in ['A','B']: # A & B starbases tend to be around larger worlds.
-		worldsize += 2
+		worldsize=stellagama.hidice(2,3,6)-2
 	if starport in ['X']: # X starbases are remote outposts around smaller worlds.
-		worldsize -= 2
+		worldsize=stellagama.lodice(2,3,6)-2
 	if worldsize < 0:
-		worldsize = -1
+		worldsize = 0
 
 	return worldsize #outputs world size number
 
@@ -68,10 +66,14 @@ def tmpt_gen(worldatmo): #inputs atmos number
 	"""
 	worldtemp=0
 	worldtemp=stellagama.dice(2,6) - 2
+	# planets with less than thin atmosphere have extreme temperature variations
+	if worldatmo in [0,1]:
+		worldtemp = -1
+	# planets with hostile atmospheres are hotter
 	if worldatmo >= 10:
 		worldtemp += 3
 	if worldtemp < 0:
-		worldtemp = 0
+		worldtemp = -1
 	if worldtemp > 10:
 		worldtemp = 10
 	return worldtemp #outputs temperature number
@@ -97,12 +99,23 @@ def pop_gen (starport): #inputs world size, atmospehere, and hydrographics numbe
 	generates the population number
 	"""
 	worldpop=0
+	"""
+	if starport in ["A","B","C","D"]:
+		worldpop=stellagama.hidice(2,3,6)-2
+		if starport in ["A","B"] and worldpop < 6:
+			worldpop = 6
+	if starport in ["X"]:
+		worldpop=stellagama.lodice(2,3,6)-2
+	"""
+
 	if starport in ["A","B"]:
 		worldpop=stellagama.hidice(2,3,6)-2
+		if worldpop < 6:
+			worldpop = 6
 	elif starport in ["C","D"]:
 		worldpop=stellagama.dice(2,6)-2
 	elif starport in ["X"]:
-		worldpop=stellagama.dice(2,6)-2
+		worldpop=stellagama.lodice(2,3,6)-2
 	if worldpop<0:
 		worldpop=0
 	if worldpop>12:
@@ -145,25 +158,42 @@ def tech_gen (starport, worldsize, worldatmo, worldhyd, worldpop, worldgov): #in
 	worldtech=stellagama.dice(1,6)
 
 	if starport == "A":
-		worldtech+=6
-	if starport== "B":
 		worldtech+=4
+	if starport== "B":
+		worldtech+=3
 	if starport== "C":
 		worldtech+=2
 
 	if worldsize in [0, 1]:
+			worldtech+=2
+
+
+	if worldatmo in [2,3,4,7,9]:
 		worldtech+=2
-	if worldsize in [2, 3, 4]:
-		worldtech+=1
-
-	if worldatmo in [0, 1, 2, 3, 10, 11, 12, 13, 14, 15]:
-		worldtech+=1
-
-	if worldpop in [1, 2, 3, 4, 5]:
-		worldtech+=1
-
-	if worldpop >= 8:
+	if worldatmo in [0,1] or worldatmo > 9:
 		worldtech+=2
+
+	if worldpop in [1, 2, 3, 4]:
+		worldtech+=1
+	if worldpop == 8:
+		worldtech+=2
+	if worldpop == 9:
+		worldtech+=2
+	if worldpop == 10:
+		worldtech+=2
+
+	if worldpop == 0:
+		worldtech = 0
+
+	"""
+	# Ind worlds need min tech of 6
+	if worldatmo in [0, 1, 2, 4, 7, 9] and worldpop >= 8 and world_tech < 6:
+		worldtech=6
+
+	# Vaccuum words, asteroids and orbitals need a min tech of 8
+	if (worldatmo in [0,1,2,3] or worldsize < 1) and world_tech < 6:
+		worldtech=8
+	"""
 
 	if worldtech<0:
 		worldtech=0
@@ -200,6 +230,7 @@ def trade_gen (uwp_list): #input UWP list
 		popmult = 1
 	popmult = str(popmult)
 
+	'''
 	if uwp_list['worldpop'] == 0:
 		trade_list.append("0")
 	if uwp_list['worldpop'] == 1:
@@ -226,33 +257,65 @@ def trade_gen (uwp_list): #input UWP list
 		trade_list.append(popmult + "0000000000")
 	if uwp_list['worldpop'] == 12:
 		trade_list.append(popmult + "00000000000")
+	'''
 
-	if uwp_list['worldsize'] == 0:
-		trade_list.append("0G")
+
+	if worldhyd in [3,4,5,6,7,8,9] and worldatmo in [5,6,8]	: hab = 3;
+	else if worldhyd in [3,4,5,6,7,8,9,10] and worldatmo in [,6,8]: hab =2
+
+	if uwp_list['worldpop'] == 0:
+		trade_list.append("0")
+	if uwp_list['worldpop'] == 1:
+		trade_list.append("10")
+	if uwp_list['worldpop'] == 2:
+		trade_list.append("100")
+	if uwp_list['worldpop'] == 3:
+		trade_list.append("1000")
+	if uwp_list['worldpop'] == 4:
+		trade_list.append("10000")
+	if uwp_list['worldpop'] == 5:
+		trade_list.append("100000")
+	if uwp_list['worldpop'] == 6:
+		trade_list.append("1000000")
+	if uwp_list['worldpop'] == 7:
+		trade_list.append("10000000")
+	if uwp_list['worldpop'] == 8:
+		trade_list.append("100000000")
+	if uwp_list['worldpop'] == 9:
+		trade_list.append("1000000000")
+	if uwp_list['worldpop'] == 10:
+		trade_list.append("10000000000")
+	if uwp_list['worldpop'] == 11:
+		trade_list.append("100000000000")
+	if uwp_list['worldpop'] == 12:
+		trade_list.append("1000000000000")
+
+	if uwp_list['worldsize'] <= 0:
+		trade_list.append("0")
 	elif uwp_list['worldsize'] == 1:
-		trade_list.append("0.05G")
+		trade_list.append("0.05")
 	elif uwp_list['worldsize'] == 2:
-		trade_list.append("0.15G")
+		trade_list.append("0.15")
 	elif uwp_list['worldsize'] == 3:
-		trade_list.append("0.3G")
+		trade_list.append("0.4")
 	elif uwp_list['worldsize'] == 4:
-		trade_list.append("0.5G")
+		trade_list.append("0.6")
 	elif uwp_list['worldsize'] == 5:
-		trade_list.append("0.75G")
+		trade_list.append("0.8")
 	elif uwp_list['worldsize'] == 6:
-		trade_list.append("0.9G")
+		trade_list.append("1.0")
 	elif uwp_list['worldsize'] == 7:
-		trade_list.append("1.0G")
+		trade_list.append("1.2")
 	elif uwp_list['worldsize'] == 8:
-		trade_list.append("1.25G")
+		trade_list.append("1.4")
 	elif uwp_list['worldsize'] == 9:
-		trade_list.append("1.3G")
+		trade_list.append("1.6")
 	elif uwp_list['worldsize'] == 10:
-		trade_list.append("1.4G")
+		trade_list.append("1.8")
 	elif uwp_list['worldsize'] == 11:
-		trade_list.append("1.5G")
+		trade_list.append("2.0")
 	elif uwp_list['worldsize'] == 12:
-		trade_list.append("1.6G")
+		trade_list.append("2.2")
 	else:
 		trade_list.append("-")
 
@@ -273,32 +336,47 @@ def trade_gen (uwp_list): #input UWP list
 	if uwp_list['worldatmo'] == 11:
 		trade_list.append("Corrosive")
 	if uwp_list['worldatmo'] == 12:
-		trade_list.append("Insidous")
-	if uwp_list['worldatmo'] == 13:
 		trade_list.append("Radioactive")
+	if uwp_list['worldatmo'] == 13:
+		trade_list.append("Extreme")
 
 	if uwp_list['worldatmo'] in [2,4,7,9]:
 		trade_list.append("Tainted")
 	else:
-		trade_list.append("Untainted")
-
-	if uwp_list['worldsize'] == -1:
-		trade_list.append("Orbital")
-	elif uwp_list['worldatmo'] == 0 and uwp_list['worldsize'] == 0 and uwp_list['worldhyd'] == 0:
-		trade_list.append("Asteroid")
-	elif uwp_list['worldatmo'] >= 2 and uwp_list['worldhyd'] == 0:
-		trade_list.append("Desert")
-	elif uwp_list['worldatmo'] >= 10 and uwp_list['worldhyd'] >= 1:
-		trade_list.append ("Fluid")
-	elif uwp_list['worldatmo'] in [5,6,8] and uwp_list['worldhyd'] in [4, 5, 6, 7, 8]:
-		trade_list.append("Garden")
-	elif uwp_list['worldatmo'] in [0, 1] and uwp_list['worldhyd'] >= 1:
-		trade_list.append("Iceball")
-	elif uwp_list['worldhyd'] == 10:
-		trade_list.append("Waterworld")
-	else:
 		trade_list.append("-")
-	
+
+	worldtemp = tmpt_gen(uwp_list['worldatmo'])
+
+	if worldtemp in [-1]:
+		trade_list.append("ExtremeVariable")
+	if worldtemp in [0,1]:
+		trade_list.append("Cold")
+	if worldtemp in [2,3]:
+		trade_list.append("Cool")
+	if worldtemp in [4,5,6]:
+		trade_list.append("Temperate")
+	if worldtemp in [7,8]:
+		trade_list.append("Warm")
+	if worldtemp in [9,10]:
+		trade_list.append("Hot")
+
+	if uwp_list['worldatmo'] in [0,1]:
+		trade_list.append("Vaccsuit")
+	elif uwp_list['worldatmo'] in [2,3]:
+		trade_list.append("Compressor")
+	elif uwp_list['worldatmo'] in [4,7,9]:
+		trade_list.append("Filter")
+	elif uwp_list['worldatmo'] in [5,6,8]:
+		trade_list.append("Breathable")
+	elif uwp_list['worldatmo'] == 10:
+		trade_list.append("Oxygen")
+	elif uwp_list['worldatmo'] == 11:
+		trade_list.append("Hardsuit")
+	elif uwp_list['worldatmo'] == 12:
+		trade_list.append("Radsuit")
+	elif uwp_list['worldatmo'] == 13:
+		trade_list.append("Exocraft")
+
 	if uwp_list['worldpop'] >= 9:
 		trade_list.append("HiPop")
 	elif uwp_list['worldpop'] in [1,2,3,4]:
@@ -319,13 +397,13 @@ def trade_gen (uwp_list): #input UWP list
 	if uwp_list['worldgov'] == 4:
 		trade_list.append("Feudal")
 	if uwp_list['worldgov'] == 5:
-		trade_list.append("Theocratic")
+		trade_list.append("Disunited")
 	if uwp_list['worldgov'] == 6:
 		trade_list.append("Colonial")
 	if uwp_list['worldgov'] == 7:
-		trade_list.append("Representative")
+		trade_list.append("Theocratic")
 	if uwp_list['worldgov'] == 8:
-		trade_list.append("Disunited")
+		trade_list.append("Representative")
 	if uwp_list['worldgov'] == 9:
 		trade_list.append("Oligarchic")
 	if uwp_list['worldgov'] == 10:
@@ -335,38 +413,55 @@ def trade_gen (uwp_list): #input UWP list
 	if uwp_list['worldgov'] == 12:
 		trade_list.append("Dictatorship")
 
-	if uwp_list['worldatmo'] in [4, 5, 6, 7, 8, 9] and uwp_list['worldhyd'] in [4, 5, 6, 7, 8] and uwp_list['worldpop'] in [5, 6, 7]:
+	trade_list.append(str(uwp_list['worldtech']))
+
+	if uwp_list['worldatmo'] in [4, 5, 6, 7, 8, 9] and uwp_list['worldhyd'] in [4, 5, 6, 7, 8, 9] and uwp_list['worldpop'] in [5, 6, 7, 8]:
 		trade_list.append("Agri")
-	elif uwp_list['worldatmo'] in [0, 1, 2, 3, 10, 11, 12, 13] and uwp_list['worldhyd'] in [0, 1, 2, 3, 10] and uwp_list['worldpop'] >= 6:
+	elif uwp_list['worldatmo'] in [0, 1, 2, 3, 10, 11, 12, 13] and uwp_list['worldhyd'] in [0, 1, 2, 10] and uwp_list['worldpop'] > 3:
 		trade_list.append("NonAgri")
 	else:
 		trade_list.append("-")
 
-	if uwp_list['worldatmo'] in [0, 1, 2, 4, 7, 9] and uwp_list['worldpop'] >= 8:
+	if uwp_list['worldatmo'] in [0, 1, 2, 3, 4, 7, 9,10,11,12,13] and uwp_list['worldpop'] >= 7 and uwp_list['worldtech'] > 4:
 		trade_list.append("Ind")
-	elif uwp_list['worldpop'] in [4, 5, 6]:
+	elif uwp_list['worldpop'] in [4,5,6]:
 		trade_list.append("NonInd")
 	else:
 		trade_list.append("-")
 
-	if uwp_list['worldtech'] in [1,2,3,4,5]:
-		trade_list.append("LoTech")
-	elif uwp_list['worldtech'] >= 11:
-		trade_list.append("HiTech")
+	if uwp_list['worldsize'] == -1:
+		trade_list.append("Orbital")
+	elif uwp_list['worldsize'] == 0:
+		trade_list.append("Asteroid")
 	else:
-		trade_list.append("-")
+		if uwp_list['worldatmo'] in [0,1] and uwp_list['worldhyd'] >= 1:
+			trade_list.append("Iceball")
+		elif uwp_list['worldatmo'] >= 2 and uwp_list['worldhyd'] == 0:
+			trade_list.append("Desert")
+		elif uwp_list['worldatmo'] >= 10 and uwp_list['worldhyd'] > 1:
+			trade_list.append ("Fluid")
+		elif uwp_list['worldatmo'] in [2,3] and uwp_list['worldhyd'] in [1,2,3]:
+			trade_list.append("Bleak")
+		elif uwp_list['worldatmo'] in [5,6,8] and uwp_list['worldhyd'] in [4,5,6,7,8]:
+			trade_list.append("Garden")
+		elif uwp_list['worldhyd'] in [10]:
+			trade_list.append("Oceanic")
+		else:
+			trade_list.append("-")
 
-	if uwp_list['worldatmo'] not in [5,6,8] and uwp_list['worldpop'] < 5:
+	if uwp_list['worldatmo'] not in [5,6,8] and uwp_list['worldpop'] in [1,2,3,4]:
 		trade_list.append("Outpost")
-	elif uwp_list['worldatmo'] in [5,6,8] and uwp_list['worldhyd'] in [4, 5, 6, 7, 8] and uwp_list['worldpop'] < 6:
+	elif uwp_list['worldatmo'] in [5,6,8] and uwp_list['worldhyd'] in [4,5,6,7,8] and uwp_list['worldpop'] < 6:
 		trade_list.append("Reserve")
-	elif uwp_list['worldatmo'] in [2, 3, 4, 5] and uwp_list['worldhyd'] in [0, 1, 2, 3] and uwp_list['worldpop'] >= 5:
-		trade_list.append("Backwater")
+	elif uwp_list['worldpop'] > 4 and uwp_list['worldtech'] < 7:
+		trade_list.append("Poor")
+	elif uwp_list['worldpop'] > 5 and uwp_list['worldatmo'] in [5,6,8] and uwp_list['worldhyd'] in [4,5,6,7,8] and uwp_list['worldtech'] > 8:
+		trade_list.append("Rich")
 	else:
 		trade_list.append("-")
 
+	trade_list.append(uwp_list['starport'])
 
-	
 	return trade_list #output trade code list
 
 def trade_stringer (trade_list): #input trade code list
@@ -388,8 +483,8 @@ def pop_mod (worldpop): #inputs the world population number
 	generates the population multiplier
 	"""
 	popmod=0
-	popmod=stellagama.dice(2,6) - 2
-	if popmod>9:
+	popmod=stellagama.lodice(2,3,6)-2
+	if popmod==0:
 		popmod=1
 	return popmod #outputs the world population multiplier	
 

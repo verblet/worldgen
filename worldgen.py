@@ -59,7 +59,7 @@ def sec_gen (maxcolumn, maxrow): #input maximum generated space row and column. 
 		outp.write("....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8"+'\r\n')
 		outp.write(""+'\r\n') #end of SEC file header output
 		"""
-		outp.write("NAME HEX CODE BASES POPMOD AST GAS POP GRAV ATMO TAINT HAB POPGROUP GOV TRADE TRADE2 TECH WEALTH"+'\r\n')
+		outp.write("NAME HEX CODE BASES POPMOD AST GAS POP GRAV ATMO TAINT BREATHE TEMP POPGROUP GOV TECH TRADE1 TRADE2 TRADE3 TRADE4"+'\r\n')
 
 		for column in range (1, maxcolumn+1): #generate subsector, quadrant, or sector
 			for row in range (1, maxrow+1):
