@@ -68,11 +68,30 @@ def pop_gen (uwp): #inputs world size, atmospehere, and hydrographics numbers
   if worldpop>10:
     worldpop=10
   return worldpop #outputs population number
-  
+
+
 def starport_gen (uwp): #inputs the world population number
   """
   generate uwp['starport'] letter
   """
+  starport="X"
+  starport_roll=stellagama.dice(2,6) - 2
+  if starport_roll < 4:
+    starport="X"
+  if starport_roll in [4,5]:
+    starport="D"
+  if starport_roll in [6,7]:
+    starport="C"
+  if starport_roll in [8,9]:
+    starport="B"
+  if starport_roll>9:
+    starport="A"
+  return starport #outputs the uwp['starport'] letter
+
+  
+"""
+GEN STARPORT FROM POP
+def starport_gen (uwp): #inputs the world population number
   starport="X"
   starport_roll=stellagama.dice(2,6) - 7 + uwp['worldpop']
   if starport_roll < 4:
@@ -88,6 +107,8 @@ def starport_gen (uwp): #inputs the world population number
   if starport_roll>=11:
     starport="A"
   return starport #outputs the uwp['starport'] letter
+
+"""
 
 def gov_gen (uwp): #inputs the world population number
   """
