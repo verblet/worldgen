@@ -27,11 +27,11 @@ def world_gen (worldhex): #input hex number
 	trade_list=worldgenlib.trade_gen(uwp_list) #generate trade codes
 	trade_string=worldgenlib.trade_stringer(trade_list) #convert trade codes to string
 	hab=worldgenlib.hab_gen(uwp_list) 
-	gcode=worldgenlib.gcode_gen(uwp_list) #generate PBG code
+	gov=worldgenlib.gov_tag(uwp_list)
+	grav=worldgenlib.grav_gen(uwp_list)
 	pbg=worldgenlib.pbg_gen(uwp_list) #generate PBG code
-	zone=worldgenlib.zone_gen(uwp_list) #check for Amber Zone
-	stellar=worldgenlib.star_gen(uwp_list)
-	preliminary_world_string=worldname, str(worldhex), uwp_string, base, hab, trade_string, str(gcode), pbg, stellar
+	stellar=worldgenlib.stellar_gen(uwp_list)
+	preliminary_world_string=worldname, str(worldhex), uwp_string, base, hab, trade_string, gov,str(grav), pbg, stellar
 	world_string=str.join(';', preliminary_world_string)
 	return world_string #output world row string compatible with a SEC file	
 	
@@ -60,12 +60,12 @@ def sec_gen (maxcolumn, maxrow): #input maximum generated space row and column. 
 		outp.write("....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8"+'\r\n')
 		outp.write(""+'\r\n') #end of SEC file header output
 		"""
-		outp.write("NAME;HEX;UWP;BASES;HAB;TRADE;GRAV;POP;GAS;AST;STELLAR") #end of SEC file header output
+		outp.write("NAME;HEX;UWP;BASES;HAB;TRADE;GOV;GRAV;POP;AST;GAS;STELLAR") #end of SEC file header output
 		outp.write(""+'\r\n') #end of SEC file header output
 		for column in range (1, maxcolumn+1): #generate subsector, quadrant, or sector
 			for row in range (1, maxrow+1):
 				throw=stellagama.dice(1,6)
-				if throw>=4:
+				if throw>=1:
 					if row<=9:
 						row_loc="0%i" % (row)
 					if row>=10:
